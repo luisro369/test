@@ -1,4 +1,6 @@
+# importando librerias de stack exchange (pip install py_stackExchange si no la tienen)
 import stackexchange,sys
+# Encerrando la coneccion en un try except
 try:
     StackConexion = stackexchange.Site(stackexchange.StackOverflow, impose_throttling=True)
     StackConexion.be_inclusive()
@@ -10,6 +12,7 @@ try:
 except:
     print('Sorry!! there was trouble with your connexion please verify the followin: \n- You are conected to internet')
 
+####Investigar de como usar el questions.related_to
 #questions = StackConexion.recent_questions(pagesize=10, filter='_b')
 questions = StackConexion.questions.related_to('pregunta en stackoverflow',pagesize=10, filter='_b')
 print('\r #  vote ans view')
@@ -29,6 +32,39 @@ for question in questions[:10]:
     print(qu.body[:250] + ('...' if len(qu.body) > 250 else ''))
     
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #===========pruebas fallidas de apis
     
 '''import http.client
 import json
