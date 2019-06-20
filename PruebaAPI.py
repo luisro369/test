@@ -1,118 +1,33 @@
-# importando librerias de stack exchange (pip install py_stackExchange si no la tienen)
-import stackexchange,sys
-# Encerrando la coneccion en un try except
-try:
-    StackConexion = stackexchange.Site(stackexchange.StackOverflow, impose_throttling=True)
-    StackConexion.be_inclusive()
-
-    sys.stdout.write('Loading... \n')
-    sys.stdout.flush()
-
-       
-except:
-    print('Sorry!! there was trouble with your connexion please verify the followin: \n- You are conected to internet')
-
-####Investigar de como usar el questions.related_to
-#questions = StackConexion.recent_questions(pagesize=10, filter='_b')
-questions = StackConexion.questions.related_to('pregunta en stackoverflow',pagesize=10, filter='_b')
-print('\r #  vote ans view')
-
-
-cur = 1
-for question in questions[:10]:
-    print('%2d %3d  %3d  %3d \t%s' % (cur, question.score, len(question.answers), question.view_count, question.title))
-    cur += 1
-
-    num = int(input('Question no.: '))
-    qu  = questions[num - 1]
-    print('--- %s' % qu.title)
-    print('%d votes, %d answers, %d views.' % (qu.score, len(qu.answers), qu.view_count))
-    print('Tagged: ' + ', '.join(qu.tags))
-    print()
-    print(qu.body[:250] + ('...' if len(qu.body) > 250 else ''))
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    #===========pruebas fallidas de apis
-    
-'''import http.client
+#LIBRERIAS QUE SE VAN A OCUPAR, INSTALALAS CON PIP, SI NO TE SIRVE BS4 PIP INSTALL --UPDATE BS4 <---ALGO ASI REVISALO
+import requests
+from bs4 import BeautifulSoup
 import json
-import zlib
+    
+def main(params):
+    #=====CONEXION CON STACKOVERFLOW ESPECIFICAMENTE EL BUSCADOR, Y BUSCAMOS LO QUE QUEREMOS
+    res = requests.get("https://stackoverflow.com/search?q="+params)
+    #-----------PARCEAMOS EL RESULTADO DE LA BUSQUEDA A HTML
+    soup = BeautifulSoup(res.text, "html.parser")
+    #-----------SCRAPEAMOS EN EL HTML DE LA PAGINA LAS CLASES DE INTERES 
+    question_summary = soup.findAll("div",{"class": "question-summary search-result"})
+    #-----------ACCEDEMOS AL TITULO DE CADA PREGUNTA
+    #print (question_summary)
+    print (question_summary[0].h3.a["title"])#<--------PODES BUSCAR ALGO EN STACKOVERFLOW Y COMPARARLO CON ESTO TENES QUE CAMBIAR LOS NUMEROS PARA VER LAS DEMAS
 
-c = http.client.HTTPConnection('api.stackoverflow.com')
-c.request('GET', '/1.1/questions?answers=true&page=1&pagesize=5&tagged=sql')
-r = c.getresponse()
-
-compressedData = r.read()
-uncompressedData= zlib.decompress(compressedData, 15+32)
-
-data = str(uncompressedData, 'utf-8')
-print(data)
-'''
-
-'''import requests
-
-response = requests.get("https://stackoverflow.com/questions")
-
-print(response.text)
-'''
-
-'''
-#impotando libreria de stackAPI
-import json
-from stackapi import StackAPI
-from datetime import datetime
-try:
-    SITE = StackAPI('stackoverflow')
-    SITE.max_pages=10
-except StackAPIError as e:
-    print(e.message)
-questions = SITE.fetch('questions', fromdate=datetime(2011,11,11), todate=datetime(2018,12,31), min=10, sort='votes', tagged='zelda')
-
-print ('La cantidad de preguntas con este tag son: ' + str(len(questions['items'])))
-
-#print(questions)
-'''
+    #------------PROPUESTA PARA LLENAR UNA VARIABLE QUESTION_TITLE (NO FUNCIONA) MEJORAR ACA
+    '''
+    question_title = []
+    counter = 0
+    for question in question_summary:
+        question_title[counter] = question_summary[counter].h3.a["title"]
+        counter += 1
+    print (question_title)
+    '''
 
 
+    
+if __name__=="__main__":
+    main(input('ingrese parametro: '))
 
 
-'''import requests, json
-
-url = 'https://api.github.com/some/endpoint'
-payload = {'some':'data'}
-headers = {'content-type':'application/json'}
-
-r = requests.post(url, data = json.dumps(payload), headers=headers)
-'''
+   
