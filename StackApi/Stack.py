@@ -20,7 +20,7 @@ class Stack():
             return title
         except Exception as e:
             return e
-            #======================Method 2 GETTING THE ANSWER=====================================
+    #======================Method 2 GETTING THE ANSWER=====================================
     def getAnswer(self,response):   
         try:
             res = requests.get(self.URL_BASE + self.Title_link[response])
@@ -30,3 +30,6 @@ class Stack():
             return answer_summary
         except Exception as e:
             return e
+    #============================Method 3 OBJECT DESTRUCTOR==============
+    def __del__(self):
+        print ("object deleted")

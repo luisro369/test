@@ -16,3 +16,6 @@ for i in range(0,len(List_of_questions)):
 #-----------------Choosing the best question and getting answer
 respuesta = int(input('A cual de las preguntas anteriores desea acceder? : '))
 print(stack.getAnswer(respuesta))
+
+#----------------ONCE THE OBJECT IS UTILIZED WE SHOULD ELIMINATE IT
+del stack
