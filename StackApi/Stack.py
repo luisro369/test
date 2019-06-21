@@ -21,12 +21,12 @@ class Stack():
         except Exception as e:
             return e
             #======================Method 2 GETTING THE ANSWER=====================================
-    def getAnswer(self,response):
+    def getAnswer(self,response):   
         try:
             res = requests.get(self.URL_BASE + self.Title_link[response])
             soup = BeautifulSoup(res.text,"html.parser")
-            answer_summary = soup.find("div",{"class": "post-text"})#<---es kann nur "find" sein, wenn du nur die erste frage willst
+            answer_summary = soup.findAll("div",{"class": "post-text"})#<---es würde nur "find", wenn du nur die erste frage willst
+            #=================BURGO'S CODE HERE===========================
             return answer_summary
         except Exception as e:
             return e
-
