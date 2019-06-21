@@ -5,14 +5,22 @@ import json
     
 def main(params):
     #=====CONEXION CON STACKOVERFLOW ESPECIFICAMENTE EL BUSCADOR, Y BUSCAMOS LO QUE QUEREMOS
-    res = requests.get("https://stackoverflow.com/search?q="+params)
-    #-----------PARCEAMOS EL RESULTADO DE LA BUSQUEDA A HTML
-    soup = BeautifulSoup(res.text, "html.parser")
-    #-----------SCRAPEAMOS EN EL HTML DE LA PAGINA LAS CLASES DE INTERES 
-    question_summary = soup.findAll("div",{"class": "question-summary search-result"})
-    #-----------ACCEDEMOS AL TITULO DE CADA PREGUNTA
-    #print (question_summary)
-    print (question_summary[0].h3.a["title"])#<--------PODES BUSCAR ALGO EN STACKOVERFLOW Y COMPARARLO CON ESTO TENES QUE CAMBIAR LOS NUMEROS PARA VER LAS DEMAS
+    try:
+        res = requests.get("https://stackoverflow.com/search?q="+params)
+        #-----------PARCEAMOS EL RESULTADO DE LA BUSQUEDA A HTML
+        soup = BeautifulSoup(res.text, "html.parser")
+        #-----------SCRAPEAMOS EN EL HTML DE LA PAGINA LAS CLASES DE INTERES 
+        question_summary = soup.findAll("div",{"class": "question-summary search-result"})
+        #-----------ACCEDEMOS AL TITULO DE CADA PREGUNTA
+        #print (question_summary)
+    except Exception as e:
+        print("Ups... something whent wrong, exception code: \n" +str(e))
+
+        
+    try:
+        print (question_summary[0].h3.a["title"])#<--------PODES BUSCAR ALGO EN STACKOVERFLOW Y COMPARARLO CON ESTO TENES QUE CAMBIAR LOS NUMEROS PARA VER LAS DEMAS
+    except Exception as e:
+        print("Ups... something whent wrong, exception code: \n" +str(e))
 
     #------------PROPUESTA PARA LLENAR UNA VARIABLE QUESTION_TITLE (NO FUNCIONA) MEJORAR ACA
     '''
