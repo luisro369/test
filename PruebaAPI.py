@@ -16,24 +16,19 @@ def main(params):
     except Exception as e:
         print("Ups... something whent wrong, exception code: \n" +str(e))
 
-        
-    try:
-        print (question_summary[0].h3.a["title"])#<--------PODES BUSCAR ALGO EN STACKOVERFLOW Y COMPARARLO CON ESTO TENES QUE CAMBIAR LOS NUMEROS PARA VER LAS DEMAS
-    except Exception as e:
-        print("Ups... something whent wrong, exception code: \n" +str(e))
-
-    #------------PROPUESTA PARA LLENAR UNA VARIABLE QUESTION_TITLE (NO FUNCIONA) MEJORAR ACA
-    '''
-    question_title = []
-    counter = 0
-    for question in question_summary:
-        question_title[counter] = question_summary[counter].h3.a["title"]
-        counter += 1
-    print (question_title)
-    '''
-
-
+    #======si no hay internet:
+    question_summary = None
     
+    if question_summary is not None:
+        for question in question_summary:
+            title = question.h3.a["title"]
+            print (title)
+    else:
+        print("estas sin inter perro")
+
+
+
+        
 if __name__=="__main__":
     main(input('ingrese pregunta: '))
 
