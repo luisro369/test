@@ -16,18 +16,29 @@ def main(params):
     except Exception as e:
         print("Ups... something whent wrong, exception code: \n" +str(e))
 
-    #======si no hay internet:
-    question_summary = None
-    
-    if question_summary is not None:
-        for question in question_summary:
-            title = question.h3.a["title"]
-            print (title)
-    else:
-        print("estas sin inter perro")
 
 
+    #---------For con el que llenas los arreglos del titulo
+    title = []
+    title_href = []
+    for question in question_summary:
+        title.append(question.h3.a["title"])
+        title_href.append(question.h3.a["href"])
+    print (title[4])
+    print (title_href[4])#<---eligo pregunta 5
 
+
+    #------------segunda conexion con la respuesta
+    try:
+        res2 = requests.get("https://stackoverflow.com"+title_href[4])
+        soup = BeautifulSoup(res2.text, "html.parser")
+        answer_summary = soup.findAll("div",{"class": "post-text"})
+    except Exception as e:
+        print("Ups... something whent wrong, exception code: \n" +str(e))
+
+    #============OJO pasar a texto la variable answer_summary
+    print(answer_summary)
+        
         
 if __name__=="__main__":
     main(input('ingrese pregunta: '))
