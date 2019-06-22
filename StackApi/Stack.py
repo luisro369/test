@@ -27,7 +27,10 @@ class Stack():
             soup = BeautifulSoup(res.text,"html.parser")
             answer_summary = soup.findAll("div",{"class": "post-text"})#<---es würde nur "find", wenn du nur die erste frage willst
             #=================BURGO'S CODE HERE===========================
-            return answer_summary
+            algo = []
+            for answer in answer_summary:
+                algo.append(answer.text)
+            return algo
         except Exception as e:
             return e
     #============================Method 3 OBJECT DESTRUCTOR==============

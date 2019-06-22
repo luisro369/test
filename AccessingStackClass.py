@@ -15,7 +15,13 @@ for i in range(0,len(List_of_questions)):
     print(str(i) + ": " + List_of_questions[i])
 #-----------------Choosing the best question and getting answer
 respuesta = int(input('A cual de las preguntas anteriores desea acceder? : '))
-print(stack.getAnswer(respuesta))
+
+#print(stack.getAnswer(respuesta))
+List_of_answers = stack.getAnswer(respuesta)
+print("============================================ORIGINAL QUESTION========================================================================== \n")
+for i in range(0,len(List_of_answers)):
+    print(List_of_answers[i])
+    print("============================================ANSWER " + str(i+1) + "============================================================= \n")
 
 #----------------ONCE THE OBJECT IS UTILIZED WE SHOULD ELIMINATE IT
 del stack
